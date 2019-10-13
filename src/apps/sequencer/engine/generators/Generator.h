@@ -15,6 +15,7 @@ public:
     enum class Mode {
         Euclidean,
         Random,
+        QuickRandomGenerator,
         Last
     };
 
@@ -22,6 +23,7 @@ public:
         switch (mode) {
         case Mode::Euclidean:   return "Euclidean";
         case Mode::Random:      return "Random";
+        case Mode::QuickRandomGenerator:      return "Quick Random";
         case Mode::Last:        break;
         }
         return nullptr;

@@ -5,6 +5,7 @@
 #include "engine/generators/Generator.h"
 #include "engine/generators/EuclideanGenerator.h"
 #include "engine/generators/RandomGenerator.h"
+#include "engine/generators/QuickRandomGenerator.h"
 
 enum class ContextAction {
     Commit,
@@ -70,6 +71,9 @@ void GeneratorPage::draw(Canvas &canvas) {
     case Generator::Mode::Random:
         drawRandomGenerator(canvas, *static_cast<const RandomGenerator *>(_generator));
         break;
+    case Generator::Mode::QuickRandomGenerator:
+        drawQuickRandomGenerator(canvas, *static_cast<const QuickRandomGenerator *>(_generator));
+        break;
     case Generator::Mode::Last:
         break;
     }
@@ -115,6 +119,45 @@ void GeneratorPage::keyUp(KeyEvent &event) {
 
 void GeneratorPage::keyPress(KeyPressEvent &event) {
     const auto &key = event.key();
+
+
+    if (_generator->mode() == Generator::Mode::QuickRandomGenerator) {
+
+      if (pageKeyState()[Key::F0]) {
+	_generator->editParam(0, 3, false);
+	_generator->update();
+      }
+
+      if (pageKeyState()[Key::F1]) {
+	_generator->editParam(0, 8, false);
+	_generator->update();
+      }
+
+      if (pageKeyState()[Key::F2]) {
+	_generator->editParam(0, 14, false);
+	_generator->update();
+      }
+
+      if (pageKeyState()[Key::F3]) {
+	_generator->editParam(0, 25, false);
+	_generator->update();
+      }
+
+      if (pageKeyState()[Key::F4]) {
+	_generator->editParam(0, 26, false);
+	_generator->update();
+      }
+
+
+    }
+
+    if (_generator->mode() == Generator::Mode::Random) {
+      if (pageKeyState()[Key::F4]) {
+	_generator->editParam(4, 0, false);
+	_generator->update();
+      }
+    }
+
 
     if (key.isContextMenu()) {
         contextShow();
@@ -187,6 +230,28 @@ void GeneratorPage::drawEuclideanGenerator(Canvas &canvas, const EuclideanGenera
 }
 
 void GeneratorPage::drawRandomGenerator(Canvas &canvas, const RandomGenerator &generator) const {
+    const auto &pattern = generator.pattern();
+    int steps = pattern.size();
+
+    int stepWidth = Width / steps;
+    int stepHeight = 16;
+    int x = (Width - steps * stepWidth) / 2;
+    int y = 16;
+
+    for (int i = 0; i < steps; ++i) {
+        int h = stepHeight - 2;
+        int h2 = (h * pattern[i]) / 255;
+        canvas.setColor(0x3);
+        canvas.drawRect(x + 1, y + 1, stepWidth - 2, h);
+        canvas.setColor(0xf);
+        canvas.hline(x + 1, y + 1 + h - h2, stepWidth - 2);
+        // canvas.fillRect(x + 1, y + 1 + h - h2 , stepWidth - 2, h2);
+        x += stepWidth;
+    }
+}
+
+
+void GeneratorPage::drawQuickRandomGenerator(Canvas &canvas, const QuickRandomGenerator &generator) const {
     const auto &pattern = generator.pattern();
     int steps = pattern.size();
 

@@ -2,10 +2,11 @@
 
 #include "EuclideanGenerator.h"
 #include "RandomGenerator.h"
+#include "QuickRandomGenerator.h"
 
 #include "core/utils/Container.h"
 
-static Container<EuclideanGenerator, RandomGenerator> generatorContainer;
+static Container<EuclideanGenerator, RandomGenerator, QuickRandomGenerator> generatorContainer;
 
 Generator *Generator::create(Generator::Mode mode, SequenceBuilder &builder) {
     switch (mode) {
@@ -13,6 +14,8 @@ Generator *Generator::create(Generator::Mode mode, SequenceBuilder &builder) {
         return generatorContainer.create<EuclideanGenerator>(builder);
     case Mode::Random:
         return generatorContainer.create<RandomGenerator>(builder);
+    case Mode::QuickRandomGenerator:
+        return generatorContainer.create<QuickRandomGenerator>(builder);
     case Mode::Last:
         break;
     }
