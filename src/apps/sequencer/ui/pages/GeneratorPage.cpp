@@ -116,6 +116,15 @@ void GeneratorPage::keyUp(KeyEvent &event) {
 void GeneratorPage::keyPress(KeyPressEvent &event) {
     const auto &key = event.key();
 
+
+    if (_generator->mode() == Generator::Mode::Random) {
+      if (pageKeyState()[Key::F4]) {
+	_generator->editParam(4, 0, false);
+	_generator->update();
+      }
+    }
+
+
     if (key.isContextMenu()) {
         contextShow();
         event.consume();
@@ -206,6 +215,7 @@ void GeneratorPage::drawRandomGenerator(Canvas &canvas, const RandomGenerator &g
         x += stepWidth;
     }
 }
+
 
 void GeneratorPage::contextShow() {
     showContextMenu(ContextMenu(

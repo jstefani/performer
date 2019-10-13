@@ -13,6 +13,7 @@ public:
         Smooth,
         Bias,
         Scale,
+        Random,
         Last
     };
 

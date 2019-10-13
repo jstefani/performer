@@ -14,7 +14,8 @@ const char *RandomGenerator::paramName(int index) const {
     case Param::Smooth: return "Smooth";
     case Param::Bias:   return "Bias";
     case Param::Scale:  return "Scale";
-    case Param::Last:   break;
+    case Param::Random: return "Random";
+    case Param::Last: return "Last";
     }
     return nullptr;
 }
@@ -25,6 +26,18 @@ void RandomGenerator::editParam(int index, int value, bool shift) {
     case Param::Smooth: setSmooth(smooth() + value); break;
     case Param::Bias:   setBias(bias() + value); break;
     case Param::Scale:  setScale(scale() + value); break;
+    case Param::Random:  
+      int r;
+      r = rand() % 1000;
+            setSeed(r);
+            //r = rand() % 10;
+            //setSmooth(r);
+            //r = rand() % 10;
+            //setBias(r);
+            //r = rand() % 100;
+	    //            setScale(r);
+      update();
+      break;
     case Param::Last:   break;
     }
 }
@@ -35,6 +48,7 @@ void RandomGenerator::printParam(int index, StringBuilder &str) const {
     case Param::Smooth: str("%d", smooth()); break;
     case Param::Bias:   str("%d", bias()); break;
     case Param::Scale:  str("%d", scale()); break;
+    case Param::Random:  break;
     case Param::Last:   break;
     }
 }
