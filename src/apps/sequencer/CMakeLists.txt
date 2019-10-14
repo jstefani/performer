@@ -20,6 +20,7 @@ set(sources
     engine/generators/EuclideanGenerator.cpp
     engine/generators/Generator.cpp
     engine/generators/RandomGenerator.cpp
+    engine/generators/QuickRandomGenerator.cpp
     engine/generators/Rhythm.cpp
     # intro
     intro/Intro.cpp
