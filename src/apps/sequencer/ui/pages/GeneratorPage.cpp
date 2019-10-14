@@ -251,8 +251,8 @@ void GeneratorPage::drawRandomGenerator(Canvas &canvas, const RandomGenerator &g
 }
 
 
-<<<<<<< HEAD
-=======
+
+
 void GeneratorPage::drawQuickRandomGenerator(Canvas &canvas, const QuickRandomGenerator &generator) const {
     const auto &pattern = generator.pattern();
     int steps = pattern.size();
@@ -274,7 +274,7 @@ void GeneratorPage::drawQuickRandomGenerator(Canvas &canvas, const QuickRandomGe
     }
 }
 
->>>>>>> beat_generator
+
 void GeneratorPage::contextShow() {
     showContextMenu(ContextMenu(
         contextMenuItems,
